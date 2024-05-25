@@ -11,7 +11,7 @@ from gridfs import GridFS
 
 
 # Set up OpenAI API credentials
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Function to generate txt if needed (ya no se usa)
 def readFile(file_path):
@@ -24,12 +24,6 @@ def readFile(file_path):
     elif file_path.endswith('.txt'):
         text = open(file_path, 'r').read()
         return text
-  
-# Example usage
-file_path = r"tare/libros/Competitive programming handbook.pdf"
-print("start")
-quiz_questions = readFile(file_path)
-print("ending")
 
 
 def sendDB(file_path):
@@ -49,11 +43,19 @@ def sendDB(file_path):
     # If the file size is less than 16MB, store it as a regular document
     if len(content) < 16 * 1024 * 1024:  # 16MB in bytes
         document = {
-            'id_curso': 'your_foreign_key_value',
+            'id_curso': '1',
             'file_content': content
         }
         collection.insert_one(document)
     # If the file size is 16MB or more, store it in GridFS
     else:
         with open(file_path, 'rb') as file:
-            fs.put(file, filename=file_path, id_curso='your_foreign_key_value')
+            fs.put(file, filename=file_path, id_curso='1')
+
+# Example usage
+file_path = r"tare/libros/Competitive programming handbook.pdf"
+print("start")
+# print("start")
+# quiz_questions = readFile(file_path)
+sendDB(file_path)
+print("ending")
