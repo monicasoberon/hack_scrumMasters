@@ -27,6 +27,7 @@ export default function Grupos(props) {
                 <div className="grupo-header">
                     <h3 className="grupo-title">{props.nombreGrupo}</h3>
                 </div>
+
                 <div className="grupo-content">
 
                     <div className="estudiante-stats">

@@ -1,9 +1,12 @@
 import React from 'react';
+import './TutorTara.css'
 
 export default function TutorTara() {
     return (
-        <div className='tutor-tara-container'>
-            <h1>tutor tara</h1>
+
+        <div className="main-tutor">
+            <p>hola</p>
         </div>
+
     );
 }

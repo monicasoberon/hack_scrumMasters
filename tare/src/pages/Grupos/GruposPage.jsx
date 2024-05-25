@@ -24,6 +24,7 @@ export default function GruposPage() {
     
     return (
         <div>
+            <h1 className='title' >Mis Grupos</h1>
             {propsPrueba.map((grupo) => (
                 <Grupos key={grupo.id} {...grupo} />
             ))}

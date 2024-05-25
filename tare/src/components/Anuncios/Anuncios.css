@@ -1,7 +1,4 @@
 .anuncios-container {
-    position: fixed;
-    top: 0;
-    right: 0;
     width: 300px;
     height: 100%;
     display: flex;
@@ -20,6 +17,7 @@
     margin-top: 35px;
     overflow: auto; /* Allow scrolling if content overflows */
     padding: 15px;
+    width: 250px;
 }
 
 .anuncio-title {
