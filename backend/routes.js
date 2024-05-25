@@ -1,51 +1,66 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const multer = require('multer');
 const router = express.Router();
 
 // Define schemas and models
-const maestroSchema = new mongoose.Schema({
+const Maestro = mongoose.model('Maestro', new mongoose.Schema({
     _id: String,
     email: { type: String, required: true },
     password: { type: String, required: true },
     first_name: { type: String, required: true },
     last_name: { type: String, required: true }
-});
-const Maestro = mongoose.model('Maestro', maestroSchema);
+}));
 
-const estudianteSchema = new mongoose.Schema({
+const Estudiante = mongoose.model('Estudiante', new mongoose.Schema({
     _id: String,
     name: { type: String, required: true }
-});
-const Estudiante = mongoose.model('Estudiante', estudianteSchema);
+}));
 
-const cursoSchema = new mongoose.Schema({
+const Curso = mongoose.model('Curso', new mongoose.Schema({
     _id: String,
     name: { type: String, required: true },
     teacher_id: { type: String, ref: 'Maestro', required: true }
-});
-const Curso = mongoose.model('Curso', cursoSchema);
+}));
 
-const trabajoSchema = new mongoose.Schema({
+const Trabajo = mongoose.model('Trabajo', new mongoose.Schema({
     _id: String,
     course_id: { type: String, ref: 'Curso', required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true }
-});
-const Trabajo = mongoose.model('Trabajo', trabajoSchema);
+}));
 
-const inscritoSchema = new mongoose.Schema({
+const Inscrito = mongoose.model('Inscrito', new mongoose.Schema({
     student_id: { type: String, ref: 'Estudiante', required: true },
     course_id: { type: String, ref: 'Curso', required: true }
-});
-const inscrito = mongoose.model('inscrito', inscritoSchema);
+}));
 
-const calificacionSchema = new mongoose.Schema({
+const Calificacion = mongoose.model('Calificacion', new mongoose.Schema({
     assignment_id: { type: String, ref: 'Trabajo', required: true },
     student_id: { type: String, ref: 'Estudiante', required: true },
     calificacion: { type: String, required: true }
+}));
+
+const PdfDetails = mongoose.model('PdfDetails', new mongoose.Schema(
+    {
+        pdf: String,
+        title: String,
+    },
+    { collection: "PdfDetails" }
+));
+
+// Set up multer for file uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "./uploads");
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + file.originalname;
+        cb(null, uniqueSuffix);
+    }
 });
-const calificacion = mongoose.model('calificacion', calificacionSchema);
+const upload = multer({ storage: storage });
 
 // Routes for Maestros
 router.get('/maestros', async (req, res) => {
@@ -127,12 +142,12 @@ router.post('/trabajos', async (req, res) => {
     }
 });
 
-// Routes for inscritos
+// Routes for Inscritos
 router.post('/inscritos', async (req, res) => {
-    const inscrito = new inscrito(req.body);
+    const inscrito = new Inscrito(req.body);
     try {
-        const newinscrito = await inscrito.save();
-        res.status(201).json(newinscrito);
+        const newInscrito = await inscrito.save();
+        res.status(201).json(newInscrito);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -140,19 +155,19 @@ router.post('/inscritos', async (req, res) => {
 
 router.get('/inscritos', async (req, res) => {
     try {
-        const inscritos = await inscrito.find().populate('student_id').populate('course_id');
+        const inscritos = await Inscrito.find().populate('student_id').populate('course_id');
         res.json(inscritos);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-// Routes for calificacions
+// Routes for Calificacions
 router.post('/calificacions', async (req, res) => {
-    const calificacion = new calificacion(req.body);
+    const calificacion = new Calificacion(req.body);
     try {
-        const newcalificacion = await calificacion.save();
-        res.status(201).json(newcalificacion);
+        const newCalificacion = await calificacion.save();
+        res.status(201).json(newCalificacion);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -160,27 +175,27 @@ router.post('/calificacions', async (req, res) => {
 
 router.get('/calificacions', async (req, res) => {
     try {
-        const calificacions = await calificacion.find().populate('assignment_id').populate('student_id');
+        const calificacions = await Calificacion.find().populate('assignment_id').populate('student_id');
         res.json(calificacions);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-// Route for Teacher to See Their Courses, Students, and calificacions
+// Route for Teacher to See Their Courses, Students, and Calificacions
 router.get('/teacher/:teacherId/courses', async (req, res) => {
     const { teacherId } = req.params;
     try {
         const courses = await Curso.find({ teacher_id: teacherId });
         const courseDetails = await Promise.all(courses.map(async (course) => {
-            const inscritos = await inscrito.find({ course_id: course._id }).populate('student_id');
+            const inscritos = await Inscrito.find({ course_id: course._id }).populate('student_id');
             const students = inscritos.map(inscrito => inscrito.student_id);
             const assignments = await Trabajo.find({ course_id: course._id });
             const calificacions = await Promise.all(assignments.map(async (assignment) => {
-                const assignmentcalificacions = await calificacion.find({ assignment_id: assignment._id }).populate('student_id');
+                const assignmentCalificacions = await Calificacion.find({ assignment_id: assignment._id }).populate('student_id');
                 return {
                     assignment,
-                    calificacions: assignmentcalificacions
+                    calificacions: assignmentCalificacions
                 };
             }));
             return {
@@ -192,6 +207,28 @@ router.get('/teacher/:teacherId/courses', async (req, res) => {
         res.json(courseDetails);
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+});
+
+// PDF file upload endpoint
+router.post("/upload-files", upload.single("file"), async (req, res) => {
+    const title = req.body.title;
+    const fileName = req.file.filename;
+    try {
+        await PdfDetails.create({ title: title, pdf: fileName });
+        res.send({ status: "ok" });
+    } catch (error) {
+        res.status(500).json({ status: error.message });
+    }
+});
+
+// Get all uploaded PDF files endpoint
+router.get("/get-files", async (req, res) => {
+    try {
+        const files = await PdfDetails.find({});
+        res.json({ status: "ok", data: files });
+    } catch (error) {
+        res.status(500).json({ status: error.message });
     }
 });
 

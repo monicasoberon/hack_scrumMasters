@@ -7,7 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://monicasoberon2747:ScrumMasters100@cluster0.r9bpf.mongodb.net/', {
+// MongoDB connection
+mongoose.connect('mongodb+srv://monicasoberon2747:ScrumMasters100@cluster0.r9bpf.mongodb.net/ScrumMasters', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
@@ -16,8 +17,10 @@ mongoose.connect('mongodb+srv://monicasoberon2747:ScrumMasters100@cluster0.r9bpf
     console.error('Error connecting to MongoDB', error);
 });
 
+// Use routes
 app.use('/api', routes);
 
+// Start server
 app.listen(3001, () => {
     console.log('Server is running on port 3001');
 });
