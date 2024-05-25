@@ -108,7 +108,7 @@ router.post('/login', async (req, res) => {
 // Routes for Maestros
 router.get('/verMaestro', async (req, res) => {
     try {
-        const maestros = await maestro.find().populate('curso');
+        const maestros = await maestro.find().populate('id_curso');
         res.json(maestros);
     } catch (error) {
         res.status(500).json({ message: error.message });
