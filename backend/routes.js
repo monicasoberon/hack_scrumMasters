@@ -6,12 +6,11 @@ const path = require('path');
 const crypto = require('crypto');
 const router = express.Router();
 
-const maestroMod = require('./models/maestro');
-const estudiante = require('./models/estudiante');
-const curso = require('./models/curso');
-const asignacion = require('./models/asignacion');
-const pdfDetails = require('./models/pdfs');
-const maestro = require('./models/maestro');
+const Maestro = require('./models/maestro');
+const Estudiante = require('./models/estudiante');
+const Curso = require('./models/curso');
+const Asignacion = require('./models/asignacion');
+const PdfDetails = require('./models/pdfs');
 
 const mongoURI = 'mongodb+srv://monicasoberon2747:ScrumMasters100@cluster0.r9bpf.mongodb.net/ScrumMasters';
 
@@ -48,7 +47,52 @@ const upload = multer({ storage });
 
 router.get('/test', (req, res) => {
     res.send('Test route');
-  });
+});
+
+// Ruta para obtener asignaciones, estudiantes y calificaciones para un curso y maestro específicos
+router.get('/obtenerDatos', async (req, res) => {
+    try {
+        const maestroId = '1'; // ID del maestro específico
+        const cursoId = '1'; // ID del curso específico
+
+        // Buscar el maestro por ID
+        const maestro = await Maestro.findById(maestroId);
+        if (!maestro) {
+            return res.status(404).json({ message: 'Maestro no encontrado' });
+        }
+
+        // Buscar el curso por ID y maestro_id
+        const curso = await Curso.findOne({ _id: cursoId, maestro_id: maestroId }).populate('estudiante_id');
+        if (!curso) {
+            return res.status(404).json({ message: 'Curso no encontrado' });
+        }
+
+        // Obtener las asignaciones del curso
+        const asignaciones = await Asignacion.find({ curso_id: curso._id });
+
+        // Obtener los estudiantes y sus calificaciones
+        const estudiantes = await Estudiante.find({ _id: { $in: curso.estudiante_id } });
+
+        const resultados = estudiantes.map(estudiante => {
+            const calificacionesEstudiante = asignaciones.map(asignacion => {
+                const calificacion = estudiante.calificaciones.find(c => c.asignacion_id === asignacion._id);
+                return {
+                    nombreAsignacion: asignacion.nombre,
+                    calificacion: calificacion ? calificacion.calificacion : 'N/A'
+                };
+            });
+
+            return {
+                nombreEstudiante: `${estudiante.primer_nombre} ${estudiante.apellido}`,
+                calificaciones: calificacionesEstudiante
+            };
+        });
+
+        res.json({ curso: curso.nombre, maestro: `${maestro.primer_nombre} ${maestro.apellido}`, resultados });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
 // Route to upload PDF with curso_id
 router.post('/upload-files', upload.single('file'), async (req, res) => {
@@ -91,36 +135,21 @@ router.get('/get-pdf/:filename', async (req, res) => {
     });
 });
 
-
-// Add the login route here
-router.post('/login', async (req, res) => {
-    const { correo_electronico, contrasena } = req.body;
-    try {
-        const maestro = await maestro.findOne({ correo_electronico });
-        if (!maestro || maestro.contrasena !== contrasena) {
-            return res.status(400).json({ message: 'Invalid email or password' });
-        }
-        res.json({ message: 'Login successful', maestroId: maestro._id });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
 // Routes for Maestros
 router.get('/verMaestro', async (req, res) => {
     try {
-        const maestro = await maestroMod.find().populate('id_curso');
-        res.json(maestro);
+        const maestros = await Maestro.find().populate('id_curso');
+        res.json(maestros);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
 router.post('/agregarMaestro', async (req, res) => {
-    const maestros = new maestro(req.body);
+    const nuevoMaestro = new Maestro(req.body);
     try {
-        const newMaestro = await maestros.save();
-        res.status(201).json(newMaestro);
+        const maestro = await nuevoMaestro.save();
+        res.status(201).json(maestro);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -129,7 +158,7 @@ router.post('/agregarMaestro', async (req, res) => {
 // Routes for Estudiantes
 router.get('/verEstudiante', async (req, res) => {
     try {
-        const estudiantes = await estudiante.find().populate('calificaciones.asignacion_id');
+        const estudiantes = await Estudiante.find().populate('calificaciones.asignacion_id');
         res.json(estudiantes);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -137,10 +166,10 @@ router.get('/verEstudiante', async (req, res) => {
 });
 
 router.post('/agregarEstudiante', async (req, res) => {
-    const estudiantes = new estudiante(req.body);
+    const nuevoEstudiante = new Estudiante(req.body);
     try {
-        const newEstudiante = await estudiantes.save();
-        res.status(201).json(newEstudiante);
+        const estudiante = await nuevoEstudiante.save();
+        res.status(201).json(estudiante);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -149,7 +178,7 @@ router.post('/agregarEstudiante', async (req, res) => {
 // Routes for Cursos
 router.get('/verCurso', async (req, res) => {
     try {
-        const cursos = await curso.find().populate('maestro_id').populate('estudiante');
+        const cursos = await Curso.find().populate('maestro_id').populate('estudiante_id');
         res.json(cursos);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -157,10 +186,10 @@ router.get('/verCurso', async (req, res) => {
 });
 
 router.post('/agregarCurso', async (req, res) => {
-    const cursos = new curso(req.body);
+    const nuevoCurso = new Curso(req.body);
     try {
-        const newCurso = await cursos.save();
-        res.status(201).json(newCurso);
+        const curso = await nuevoCurso.save();
+        res.status(201).json(curso);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -169,7 +198,7 @@ router.post('/agregarCurso', async (req, res) => {
 // Routes for Asignaciones
 router.get('/verAsignaciones', async (req, res) => {
     try {
-        const asignaciones = await asignacion.find().populate('curso_id');
+        const asignaciones = await Asignacion.find().populate('curso_id');
         res.json(asignaciones);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -177,53 +206,13 @@ router.get('/verAsignaciones', async (req, res) => {
 });
 
 router.post('/agregarAsignaciones', async (req, res) => {
-    const asignaciones = new asignacion(req.body);
+    const nuevaAsignacion = new Asignacion(req.body);
     try {
-        const newAsignacion = await asignaciones.save();
-        res.status(201).json(newAsignacion);
+        const asignacion = await nuevaAsignacion.save();
+        res.status(201).json(asignacion);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
-});
-
-// PDF file upload endpoint
-router.post('/upload-files', upload.single('file'), async (req, res) => {
-    const title = req.body.title;
-    const fileName = req.file.filename;
-    try {
-        await pdfDetails.create({ title: title, pdf: fileName });
-        res.send({ status: 'ok' });
-    } catch (error) {
-        res.status(500).json({ status: error.message });
-    }
-});
-
-// Get all uploaded PDF files endpoint
-router.get('/get-files', async (req, res) => {
-    try {
-        const files = await pdfDetails.find({});
-        res.json({ status: 'ok', data: files });
-    } catch (error) {
-        res.status(500).json({ status: error.message });
-    }
-});
-
-// Endpoint to retrieve PDF from GridFS
-router.get('/get-pdf/:filename', async (req, res) => {
-    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-        if (!file || file.length === 0) {
-            return res.status(404).json({ message: 'No file exists' });
-        }
-
-        // Check if it is a PDF
-        if (file.contentType === 'application/pdf') {
-            // Read output to browser
-            const readstream = gfs.createReadStream(file.filename);
-            readstream.pipe(res);
-        } else {
-            res.status(404).json({ message: 'Not a PDF file' });
-        }
-    });
 });
 
 module.exports = router;

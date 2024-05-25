@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const pdfSchema = new mongoose.Schema({
+const pdfDetailsSchema = new Schema({
+    title: Schema.Types.ObjectId,
     pdf: String,
-    title: String,
-    curso_id: { type: String, ref: 'curso' }  // Add course reference
-}, { collection: 'pdfDetails' });
+    curso_id: { type: Schema.Types.ObjectId, ref: 'curso' }
+}, { collection: 'pdfdetails' });
 
-module.exports = mongoose.model('pdfDetails', pdfSchema);
+module.exports = mongoose.model('pdfdetails', pdfDetailsSchema);
