@@ -6,11 +6,11 @@ const path = require('path');
 const crypto = require('crypto');
 const router = express.Router();
 
-const Maestro = require('./models/maestro');
-const Estudiante = require('./models/estudiante');
-const Curso = require('./models/curso');
-const Asignacion = require('./models/asignacion');
-const PdfDetails = require('./models/pdfs');
+const maestro = require('./models/maestro');
+const estudiante = require('./models/estudiante');
+const curso = require('./models/curso');
+const asignacion = require('./models/asignacion');
+const pdfDetails = require('./models/pdfs');
 
 const mongoURI = 'mongodb+srv://monicasoberon2747:ScrumMasters100@cluster0.r9bpf.mongodb.net/ScrumMasters';
 
