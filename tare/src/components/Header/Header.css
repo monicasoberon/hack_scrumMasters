@@ -1,0 +1,12 @@
+.header-contianer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+}
+
+.header-image{
+    width: 185px;
+    margin-left: 60px;
+}

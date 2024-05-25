@@ -2,20 +2,21 @@
     display: flex;
     flex-direction: column;
     max-width: 347px;
-    height: auto;
+    height: calc(100vh - 140px);
     background-color: #ffffff;
     margin: 0;
     padding: 0;
     border-radius: 25px;
     box-shadow: inset 0 0 4px #999999;
     padding: 20px 30px;
+    position: fixed; /* Makes the navbar static */
+    overflow: auto; /* Allow scrolling if content overflows */
 }
   
 .sidebar-content {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    height: 100%;
+    height: auto;
     margin: 0;
 }
   
@@ -60,6 +61,7 @@
     background-color: #39b6fd;
     font-size: 22px;
     cursor: pointer;
+    color: white;
 }
 
 .sidebar-link:hover {

@@ -3,17 +3,19 @@
 }
 
 .block{
-    height: 216px;
-    width: 216px;
-    border-radius: 30px;
+    height: 162px;
+    width: 162px;
+    border-radius: 22px;
     background-color: #FFFFFF;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 15px;
 }
 
 .examen-component p{
     margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 20px;
     font-weight: 500;
     color:#A7A7A7;

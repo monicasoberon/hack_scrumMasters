@@ -17,7 +17,7 @@ export default function Navbar({props}) {
             <NavLink to="/Grupos"><button className="sidebar-link">Mis Grupos</button></NavLink>
           </li>
           <li className="sidebar-link-item">
-            <NavLink to="/Grupos"><button className="sidebar-link">Mis Archivos</button></NavLink>
+            <NavLink to="/MisArchivos"><button className="sidebar-link">Mis Archivos</button></NavLink>
           </li>
           <li className="sidebar-link-item">
             <NavLink to="/Grupos"><button className="sidebar-link">Examenes</button></NavLink>

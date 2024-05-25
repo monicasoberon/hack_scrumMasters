@@ -1,0 +1,70 @@
+.anuncios-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+}
+
+.anuncio-container{
+    background: radial-gradient(
+    circle, 
+    #20ACFB 0%, 
+    #42BAFD 55%, 
+    #64C7FF 100%
+    );
+    border-radius: 20px;
+    margin-top: 35px;
+    overflow: auto; /* Allow scrolling if content overflows */
+    padding: 15px;
+}
+
+.anuncio-title {
+    margin: 0;
+    font-weight: 600;
+    font-size: 26px;
+}
+
+.anuncio-text {
+    font-weight: 500;
+    font-size: 19px;
+}
+
+.anuncios-button-container{
+    display: flex;
+    justify-content: center;
+}
+
+.anuncios-container button {
+    border: none;
+    border-radius: 15px;
+    padding: 5px 10px;
+    margin: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 20px;
+}
+
+.anuncios-container button.cerrar {
+    background-color: transparent;
+    border: none;
+}
+
+.anuncios-container button.cerrar:hover {
+    background-color: transparent;
+    transform: scale(1.1);
+}
+
+.anuncios-container button.continuar {
+    background-color: white;
+    color: #20acfb;
+}
+
+.anuncios-container button.continuar:hover {
+    background-color: transparent;
+    color: white;
+}
