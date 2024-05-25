@@ -57,8 +57,9 @@
     height: 46px;
     margin: 15px 0 0 0;
     border-radius: 10px;
-    border: solid 1px #39b6fd;
+    border: solid 2px #39b6fd;
     font-size: 22px;
+    font-weight: 600;
     cursor: pointer;
     color: white;
     background: radial-gradient(circle, #20ACFB 0%, #42BAFD 55%, #64C7FF 100%);
@@ -78,9 +79,10 @@
     margin: 15px 0 0 0;
     border-radius: 10px;
     color: #f44c4c;
-    border: solid 1px #f44c4c;
+    border: solid 2px #f44c4c;
     background-color: #ffffff;
     font-size: 22px;
+    font-weight: 600;
     cursor: pointer;
 }
 
