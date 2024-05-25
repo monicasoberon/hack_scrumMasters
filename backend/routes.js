@@ -45,6 +45,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+router.get('/test', (req, res) => {
+    res.send('Test route');
+  });
+
 // Route to upload PDF with curso_id
 router.post('/upload-files', upload.single('file'), async (req, res) => {
     const { title, curso_id } = req.body;

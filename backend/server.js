@@ -5,9 +5,12 @@ const methodOverride = require('method-override');
 const routes = require('./routes');
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 app.use(methodOverride('_method'));
+app.use('/', routes);
+
 
 // MongoDB connection
 const mongoURI = 'mongodb+srv://monicasoberon2747:ScrumMasters100@cluster0.r9bpf.mongodb.net/ScrumMasters';
