@@ -1,42 +1,88 @@
 .sidebar {
-    max-width: 347px;
-    height: auto;
     display: flex;
     flex-direction: column;
-    align-items: top;
-    justify-items: center;
-    background-color: red;
+    max-width: 347px;
+    height: auto;
+    background-color: #ffffff;
     margin: 0;
+    padding: 0;
+    border-radius: 25px;
+    box-shadow: inset 0 0 4px #999999;
+    padding: 20px 30px;
 }
   
 .sidebar-content {
-
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+    margin: 0;
 }
   
 .profile-section {
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
 }
   
 .profile-image {
-
+    max-width: 175px;
+    max-height: 175px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
   
 .profile-name {
-    
+    color: #20acfb;
+    font-size: 22px;
+    padding: 0;
+    margin: 5px 0;
 }
 
 .sidebar-links {
-
+    padding: 0;
+    margin: 0;
 }
 
 .sidebar-link-item {
-
+    padding: 0;
+    margin: 0;
 }
 
 .sidebar-link {
-
+    width: 200px;
+    height: 46px;
+    margin: 15px 0 0 0;
+    border-radius: 10px;
+    border: solid 1px #39b6fd;
+    background-color: #39b6fd;
+    font-size: 22px;
+    cursor: pointer;
 }
 
-.sidebar-link.active {
+.sidebar-link:hover {
+    background-color: #ffffff;
+    color: #39b6fd;
+}
 
+.logout-button {
+    margin-top: auto;
+    align-self: center;
+    width: 154px;
+    height: 44px;
+    margin: 15px 0 0 0;
+    border-radius: 10px;
+    color: #f44c4c;
+    border: solid 1px #f44c4c;
+    background-color: #ffffff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    color: #ffffff;
+    border: solid 1px #ffffff;
+    background-color: #f44c4c;
 }
