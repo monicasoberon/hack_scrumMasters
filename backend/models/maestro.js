@@ -6,7 +6,7 @@ const maestroSchema = new mongoose.Schema({
     apellido: String,
     correo_electronico: String,
     contrasena: String,
-    clases: [String]
+    id_curso: [{ type: String, ref: 'curso' }]
 });
 
-module.exports = mongoose.model('Maestro', maestroSchema);
+module.exports = mongoose.model('maestro', maestroSchema);
