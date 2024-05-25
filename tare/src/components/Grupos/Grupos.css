@@ -1,0 +1,29 @@
+.grupos-container {
+
+}
+
+.grupo {
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+}
+
+.grupo-header {
+    /* Styles for the header of each group */
+}
+
+.grupo-title {
+    /* Styles for the title of each group */
+}
+
+.grupo-content {
+    background-color: green;
+    display: flex;
+    flex-direction: row;
+}
+
+.estudiante-stats {
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+}
