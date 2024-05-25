@@ -6,11 +6,12 @@ const path = require('path');
 const crypto = require('crypto');
 const router = express.Router();
 
-const maestro = require('./models/maestro');
+const maestroMod = require('./models/maestro');
 const estudiante = require('./models/estudiante');
 const curso = require('./models/curso');
 const asignacion = require('./models/asignacion');
 const pdfDetails = require('./models/pdfs');
+const maestro = require('./models/maestro');
 
 const mongoURI = 'mongodb+srv://monicasoberon2747:ScrumMasters100@cluster0.r9bpf.mongodb.net/ScrumMasters';
 
@@ -108,8 +109,8 @@ router.post('/login', async (req, res) => {
 // Routes for Maestros
 router.get('/verMaestro', async (req, res) => {
     try {
-        const maestros = await maestro.find().populate('id_curso');
-        res.json(maestros);
+        const maestro = await maestroMod.find().populate('id_curso');
+        res.json(maestro);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
