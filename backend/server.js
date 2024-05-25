@@ -10,10 +10,9 @@ app.use(cors());
 app.use(express.json());
 app.use(methodOverride('_method'));
 
-// Update MongoDB connection with your new database URI
+// MongoDB connection
 const mongoURI = 'mongodb+srv://monicasoberon2747:ScrumMasters100@cluster0.r9bpf.mongodb.net/ScrumMasters';
 
-// MongoDB connection
 mongoose.connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true

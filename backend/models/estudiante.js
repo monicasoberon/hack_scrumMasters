@@ -6,7 +6,7 @@ const estudianteSchema = new mongoose.Schema({
     apellido: String,
     calificaciones: [
         {
-            asignacion_id: String,
+            asignacion_id: { type: String, ref: 'Asignacion' },
             calificacion: Number
         }
     ]
