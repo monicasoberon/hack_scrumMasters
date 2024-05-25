@@ -94,6 +94,33 @@ router.get('/obtenerDatos', async (req, res) => {
     }
 });
 
+
+// Ruta para obtener los IDs y nombres de los cursos que imparte un maestro 
+router.get('/obtenerCursos', async (req, res) => {
+    try {
+        const maestroId = '1'; // ID del maestro específico
+
+        // Buscar el maestro por ID
+        const maestro = await Maestro.findById(maestroId);
+        if (!maestro) {
+            return res.status(404).json({ message: 'Maestro no encontrado' });
+        }
+
+        // Buscar los cursos que imparte el maestro
+        const cursos = await Curso.find({ maestro_id: maestro._id }, '_id nombre');
+
+        // Formatear la respuesta
+        const resultado = cursos.map(curso => ({
+            id: curso._id,
+            nombre: curso.nombre
+        }));
+
+        res.json({ cursos: resultado });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Route to upload PDF with curso_id
 router.post('/upload-files', upload.single('file'), async (req, res) => {
     const { title, curso_id } = req.body;
