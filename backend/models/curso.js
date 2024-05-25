@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const cursoSchema = new mongoose.Schema({
     _id: String,
     nombre: String,
-    teacher_id: { type: String, ref: 'Maestro' },
-    estudiantes: [{ type: String, ref: 'Estudiante' }]
+    maestro_id: { type: String, ref: 'maestro' },
+    estudiante_id: [{ type: String, ref: 'estudiante' }]
 });
 
-module.exports = mongoose.model('Curso', cursoSchema);
+module.exports = mongoose.model('curso', cursoSchema);
