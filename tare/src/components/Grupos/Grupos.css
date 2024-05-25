@@ -1,29 +1,40 @@
+
+
 .grupos-container {
 
 }
 
 .grupo {
-    background-color: blue;
+    background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
+    border-radius: 30px;
+    box-shadow: inset 0px 6px 40px 0px rgba(0, 0, 0, 0.1);
+
+    margin-top: 20px;
+    padding: 17px;
 }
 
 .grupo-header {
     /* Styles for the header of each group */
+    padding: 0;
 }
 
 .grupo-title {
     /* Styles for the title of each group */
+    font-size: 30px;
+    font-weight: 600;
+    color: #A7A7A7;
+    margin:0;
 }
 
 .grupo-content {
-    background-color: green;
     display: flex;
     flex-direction: row;
 }
 
 .estudiante-stats {
-    background-color: red;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }

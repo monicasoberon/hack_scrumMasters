@@ -1,13 +1,31 @@
 .statsEstudiante-container{
     display: flex;
-    flex-direction: column;
-    background-color: green;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
-    height: 65px;
-    width: 65px;
+    height: 48.75px;
+    width: 48.75px;
     margin: 10px;
 }
 
-.statsEstudianet-text{
+.exelente{
+    background-color: #51E860;
+}
 
+.normal{
+    background-color: #20ACFB;
+}
+
+.peligro{
+    background-color: #FFE96D;
+}
+
+.reprobado{
+    background-color: #F44C4C;
+}
+
+.statsEstudianet-text{
+    font-weight: 600;
+    font-size: 33.75px;
+    color: #FFFFFF;
 }

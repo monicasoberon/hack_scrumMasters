@@ -1,7 +1,31 @@
-.statsGrupo-container{
 
+.container{
+    border-radius: 20px;
+    display: flex;
+    width:120px;
+    height: 120px;
+    justify-content: center;
+    align-items: center;
 }
 
 .statsGrupo-text{
-    
+    font-size: 45px;
+    font-weight: 600;
+    margin: 5px;
+}
+
+.exelente{
+    background-color: #51E860;
+}
+
+.normal{
+    background-color: #20ACFB;
+}
+
+.peligro{
+    background-color: #FFE96D;
+}
+
+.reprobado{
+    background-color: #F44C4C;
 }

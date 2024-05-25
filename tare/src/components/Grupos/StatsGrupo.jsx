@@ -1,23 +1,24 @@
 import React from 'react';
+import './StatsGrupo.css'
 
 export default function StatsGrupo({ props }) {
     let color;
-    const value = 35;
-
-    if (value <= 10) {
-        color = 'red';
-    } else if (value <= 20) {
-        color = 'yellow';
-    } else {
-        color = 'green';
+    const value = 7;
+    let status = 'exelente'
+    if (value < 7) {
+        status = 'reprobado';
+    } else if (value < 8) {
+        status = 'peligro';
+    } else if(value < 9){
+        status = 'normal';
+    } else{
+        status = 'exelente';
     }
-
-    const style = {
-        backgroundColor: color,
-    };
-
+    
     return (
-        <div className='statsGrupo-container' style={style}>
+
+        <div className = {`container ${status}`} >
+            <img src="./src/assets/icon-grupo.svg" alt="" />
             <p className='statsGrupo-text'>23</p>
         </div>
     );
