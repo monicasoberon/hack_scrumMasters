@@ -1,17 +1,33 @@
 import React from 'react'
 import './Archivo.css'
 
-export default function({props}){
+/*
+PDF = 1
+Examen = 2
+Agregar = 3
+*/
+
+export default function({props, nombre}){
+    let url = ""
+
+    if (props === 1){
+        url = "./src/assets/examen-icon.svg"
+    }else if (props === 2){
+        url = "./src/assets/pdf-icon.svg"
+    }else{
+        url = "./src/assets/add-icon.svg"
+        nombre = ""
+    }
+
     return(
         <>
         <div class = 'examen-component'>
             <div class= 'block icon-innershadow'>
-                <img src="./src/assets/examen-icon.svg" alt="Examen"/>
+                <img src={url} alt="Examen"/>
             </div>
 
-            <p>Nombre</p>
+            <p>{nombre}</p>
         </div>
-
         </>
     )
 }
