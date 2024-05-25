@@ -1,0 +1,17 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* src/App.css */
+.app-container {
+  display: flex;
+}
+
+.content {
+  margin-left: 200px; /* Adjust this value based on the width of your sidebar */
+  padding: 20px;
+  width: calc(100% - 200px); /* Adjust this value based on the width of your sidebar */
+}
