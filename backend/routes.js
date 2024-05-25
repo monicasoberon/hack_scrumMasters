@@ -1,11 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const multer = require('multer');
-const { GridFsStorage } = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
-const pdfkit = require('pdfkit');
-const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const router = express.Router();
 
 const Maestro = require('./models/maestro');
@@ -30,21 +28,63 @@ conn.once('open', () => {
 });
 
 // Create storage engine
-const storage = new GridFsStorage({
-    url: mongoURI,
-    file: (req, file) => {
-        return new Promise((resolve, reject) => {
-            const filename = Date.now() + path.extname(file.originalname);
-            const fileInfo = {
-                filename: filename,
-                bucketName: 'uploads'
-            };
-            resolve(fileInfo);
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        crypto.randomBytes(16, (err, buf) => {
+            if (err) {
+                return cb(err);
+            }
+            const filename = buf.toString('hex') + path.extname(file.originalname);
+            cb(null, filename);
         });
     }
 });
 
 const upload = multer({ storage });
+
+// Route to upload PDF with curso_id
+router.post('/upload-files', upload.single('file'), async (req, res) => {
+    const { title, curso_id } = req.body;
+    const fileName = req.file.filename;
+    try {
+        await PdfDetails.create({ title: title, pdf: fileName, curso_id: curso_id });
+        res.send({ status: 'ok' });
+    } catch (error) {
+        res.status(500).json({ status: error.message });
+    }
+});
+
+// Route to get PDFs for a specific course
+router.get('/get-files/:curso_id', async (req, res) => {
+    const { curso_id } = req.params;
+    try {
+        const files = await PdfDetails.find({ curso_id: curso_id });
+        res.json({ status: 'ok', data: files });
+    } catch (error) {
+        res.status(500).json({ status: error.message });
+    }
+});
+
+// Endpoint to retrieve PDF from GridFS
+router.get('/get-pdf/:filename', async (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        if (!file || file.length === 0) {
+            return res.status(404).json({ message: 'No file exists' });
+        }
+
+        // Check if it is a PDF
+        if (file.contentType === 'application/pdf') {
+            // Read output to browser
+            const readstream = gfs.createReadStream(file.filename);
+            readstream.pipe(res);
+        } else {
+            res.status(404).json({ message: 'Not a PDF file' });
+        }
+    });
+});
 
 
 // Add the login route here
@@ -99,47 +139,6 @@ router.get('/teacher/:teacherId/course/:courseId/students', async (req, res) => 
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
-
-// Route to upload PDF with curso_id
-router.post('/upload-files', upload.single('file'), async (req, res) => {
-    const { title, curso_id } = req.body;
-    const fileName = req.file.filename;
-    try {
-        await PdfDetails.create({ title: title, pdf: fileName, curso_id: curso_id });
-        res.send({ status: 'ok' });
-    } catch (error) {
-        res.status(500).json({ status: error.message });
-    }
-});
-
-// Route to get PDFs for a specific course
-router.get('/get-files/:curso_id', async (req, res) => {
-    const { curso_id } = req.params;
-    try {
-        const files = await PdfDetails.find({ curso_id: curso_id });
-        res.json({ status: 'ok', data: files });
-    } catch (error) {
-        res.status(500).json({ status: error.message });
-    }
-});
-
-// Endpoint to retrieve PDF from GridFS
-router.get('/get-pdf/:filename', async (req, res) => {
-    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-        if (!file || file.length === 0) {
-            return res.status(404).json({ message: 'No file exists' });
-        }
-
-        // Check if it is a PDF
-        if (file.contentType === 'application/pdf') {
-            // Read output to browser
-            const readstream = gfs.createReadStream(file.filename);
-            readstream.pipe(res);
-        } else {
-            res.status(404).json({ message: 'Not a PDF file' });
-        }
-    });
 });
 
 // Routes for Maestros
