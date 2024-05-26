@@ -1,25 +1,24 @@
 import React from 'react';
-import './StatsGrupo.css'
+import './StatsGrupo.css';
 
-export default function StatsGrupo({ props }) {
-    let color;
-    const value = 7;
-    let status = 'exelente'
-    if (value < 7) {
+export default function StatsGrupo({ promedio }) {
+    const roundedPromedio = Math.round(promedio);
+
+    let status = 'exelente';
+    if (promedio < 25) {
         status = 'reprobado';
-    } else if (value < 8) {
+    } else if (promedio < 50) {
         status = 'peligro';
-    } else if(value < 9){
+    } else if (promedio < 75) {
         status = 'normal';
-    } else{
+    } else {
         status = 'exelente';
     }
-    
-    return (
 
-        <div className = {`container ${status}`} >
-            <img src="./src/assets/icon-grupo.svg" alt="" />
-            <p className='statsGrupo-text'>23</p>
+    return (
+        <div className={`container ${status}`}>
+            {/* <img src="./src/assets/icon-grupo.svg" alt="" /> */}
+            <p className='statsGrupo-text'>{roundedPromedio}%</p>
         </div>
     );
 }
