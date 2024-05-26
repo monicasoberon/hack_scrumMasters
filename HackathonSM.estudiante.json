@@ -1,0 +1,483 @@
+[{
+  "_id": "1",
+  "primer_nombre": "María",
+  "apellido": "García",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 92
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 87
+    },
+    {
+      "asignacion_id": "6",
+      "calificacion": 61
+    },
+    {
+      "asignacion_id": "7",
+      "calificacion": 69
+    }
+  ]
+},
+{
+  "_id": "2",
+  "primer_nombre": "Juan",
+  "apellido": "Martínez",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 20
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 33
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 45
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 0
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 70
+    },
+    {
+      "asignacion_id": "6",
+      "calificacion": 55
+    },
+    {
+      "asignacion_id": "7",
+      "calificacion": 30
+    }
+  ]
+},
+{
+  "_id": "3",
+  "primer_nombre": "Ana",
+  "apellido": "López",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 99
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 99
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 97
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 89
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 92
+    },
+    {
+      "asignacion_id": "6",
+      "calificacion": 94
+    },
+    {
+      "asignacion_id": "7",
+      "calificacion": 96
+    }
+  ]
+},
+{
+  "_id": "4",
+  "primer_nombre": "Pedro",
+  "apellido": "González",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 85
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 88
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 86
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 84
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 87
+    },
+    {
+      "asignacion_id": "6",
+      "calificacion": 89
+    },
+    {
+      "asignacion_id": "7",
+      "calificacion": 90
+    }
+  ]
+},
+{
+  "_id": "5",
+  "primer_nombre": "Lucía",
+  "apellido": "Rodríguez",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 94
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 90
+    },
+    {
+      "asignacion_id": "6",
+      "calificacion": 95
+    },
+    {
+      "asignacion_id": "7",
+      "calificacion": 97
+    }
+  ]
+},
+{
+  "_id": "6",
+  "primer_nombre": "Carlos",
+  "apellido": "Fernández",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 68
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 67
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 69
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 66
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 40
+    },
+    {
+      "asignacion_id": "6",
+      "calificacion": 55
+    },
+    {
+      "asignacion_id": "7",
+      "calificacion": 35
+    }
+  ]
+},
+{
+  "_id": "7",
+  "primer_nombre": "Sofía",
+  "apellido": "Pérez",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 83
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 85
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 84
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 87
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 86
+    },
+    {
+      "asignacion_id": "6",
+      "calificacion": 89
+    },
+    {
+      "asignacion_id": "7",
+      "calificacion": 88
+    }
+  ]
+},
+{
+  "_id": "8",
+  "primer_nombre": "Diego",
+  "apellido": "Ramírez",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 92
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 90
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 91
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 93
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 95
+    },
+    {
+      "asignacion_id": "6",
+      "calificacion": 94
+    },
+    {
+      "asignacion_id": "7",
+      "calificacion": 96
+    }
+  ]
+},
+{
+  "_id": "9",
+  "primer_nombre": "Marta",
+  "apellido": "Sánchez",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 84
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 87
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 85
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 88
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 86
+    }
+  ]
+},
+{
+  "_id": "10",
+  "primer_nombre": "Luis",
+  "apellido": "Torres",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 89
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 92
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 90
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 91
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 93
+    }
+  ]
+},
+{
+  "_id": "11",
+  "primer_nombre": "Isabel",
+  "apellido": "Vega",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 0
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 0
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 50
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 100
+    }
+  ]
+},
+{
+  "_id": "12",
+  "primer_nombre": "David",
+  "apellido": "Domínguez",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 91
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 93
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 92
+    },
+    {
+      "asignacion_id": "4",
+      "calificacion": 94
+    },
+    {
+      "asignacion_id": "5",
+      "calificacion": 95
+    }
+  ]
+},
+{
+  "_id": "13",
+  "primer_nombre": "Laura",
+  "apellido": "Morales",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 85
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 88
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 87
+    }
+  ]
+},
+{
+  "_id": "14",
+  "primer_nombre": "Andrés",
+  "apellido": "Suárez",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 85
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 84
+    }
+  ]
+},
+{
+  "_id": "15",
+  "primer_nombre": "Paula",
+  "apellido": "Castro",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 80
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 82
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 81
+    }
+  ]
+},
+{
+  "_id": "16",
+  "primer_nombre": "Fernando",
+  "apellido": "Ortiz",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 100
+    }
+  ]
+},
+{
+  "_id": "17",
+  "primer_nombre": "Elena",
+  "apellido": "Jiménez",
+  "calificaciones": [
+    {
+      "asignacion_id": "1",
+      "calificacion": 100
+    },
+    {
+      "asignacion_id": "2",
+      "calificacion": 89
+    },
+    {
+      "asignacion_id": "3",
+      "calificacion": 88
+    }
+  ]
+}]
