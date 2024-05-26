@@ -3,58 +3,39 @@ import './Grupos.css';
 import StatsEstudiante from '/src/components/Grupos/StatsEstudiante.jsx';
 import StatsGrupo from '/src/components/Grupos/StatsGrupo.jsx';
 
-const dataList = [
-    { props: 'G', calif: 'e' },
-    { props: 'A', calif: 'n' },
-    { props: 'B', calif: 'p' },
-    { props: 'G', calif: 'r' },
-    { props: 'A', calif: 'p' },
-    { props: 'B', calif: 'n' },
-    { props: 'G', calif: 'e' },
-    { props: 'A', calif: 'n' },
-    { props: 'B', calif: 'p' },
-    { props: 'G', calif: 'r' },
-    { props: 'A', calif: 'p' },
-    { props: 'B', calif: 'n' }
-    // Add more items as needed
-  ];
-
 export default function Grupos(props) {
-    // const [datos, setDatos] = useState([]);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+    const [studentStats, setStudentStats] = useState([]);
+    const [grupoStats, setGrupoStats] = useState(null);
 
-    // useEffect(() => {
-    //     const fetchDatos = async () => {
-    //         try {
-    //             const response = await fetch(`http://localhost:3001/api/obtenerDatos?maestroId=${props.id}`);
-    //             if (!response.ok) {
-    //                 throw new Error('Error en la respuesta de la API');
-    //             }
-    //             const data = await response.json();
-    //             setDatos(data.resultados);
-    //             setLoading(false);
-    //         } catch (error) {
-    //             setError(error.message);
-    //             setLoading(false);
-    //         }
-    //     };
+    useEffect(() => {
+        const fetchStudentStats = async () => {
+            try {
+                const response = await fetch(`http://localhost:3001/calcularPromediosEstudiantes/${props.id}`);
+                const data = await response.json();
+                setStudentStats(data);
+            } catch (error) {
+                console.error('Error fetching student stats:', error);
+            }
+        };
 
-    //     fetchDatos();
-    // }, [props.id]);
+        const fetchGrupoStats = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/obtenerPromedios');
+                const data = await response.json();
+                const cursoStats = data.find(curso => curso.curso === props.nombreGrupo);
+                setGrupoStats(cursoStats ? cursoStats.promedioCurso : null);
+            } catch (error) {
+                console.error('Error fetching grupo stats:', error);
+            }
+        };
 
-    // if (loading) {
-    //     return <div>Cargando...</div>;
-    // }
+        fetchStudentStats();
+        fetchGrupoStats();
+    }, [props.cursoId, props.nombreGrupo]);
 
-    // if (error) {
-    //     return <div>Error: {error}</div>;
-    // }
-
-    // console.log(datos);
+    console.log(studentStats, grupoStats)
 
     return (
-
         <div className="grupos-container">
             <div className="grupo">
                 <div className="grupo-header">
@@ -62,16 +43,14 @@ export default function Grupos(props) {
                 </div>
 
                 <div className="grupo-content">
-
                     <div className="estudiante-stats">
-
-                        {dataList.map((item, index) => ( 
-                            <StatsEstudiante key={index} props={item.props} calif={item.calif} />
+                        {studentStats.map((item, index) => (
+                            <StatsEstudiante key={index} nombre={item.estudiante} promedio={item.promedio} />
                         ))}
                     </div>
 
                     <div className="grupo-stats">
-                        <StatsGrupo />
+                        {grupoStats !== null && <StatsGrupo promedio={grupoStats} />}
                     </div>
                 </div>
             </div>
