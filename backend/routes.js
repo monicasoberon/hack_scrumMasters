@@ -12,7 +12,7 @@ const Curso = require('./models/curso');
 const Asignacion = require('./models/asignacion');
 const PdfDetails = require('./models/pdfs');
 
-const mongoURI = 'mongodb+srv://monicasoberon:Hackathon@scrummasters.zm1sl.mongodb.net/';
+const mongoURI = 'mongodb+srv://monicasoberon:Hackathon@scrummasters.zm1sl.mongodb.net/HackathonSM';
 
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI, {
@@ -60,7 +60,7 @@ router.get('/obtenerDatos', async (req, res) => {
             return res.status(404).json({ message: 'Maestro no encontrado' });
         }
 
-        console.log('Maestro encontrado:', maestro);
+        //console.log('Maestro encontrado:', maestro);
 
         // Buscar el curso por ID y maestro_id
         const curso = await Curso.findOne({ _id: cursoId, maestro_id: maestroId }).populate('estudiante_id');
@@ -68,17 +68,17 @@ router.get('/obtenerDatos', async (req, res) => {
             return res.status(404).json({ message: 'Curso no encontrado' });
         }
 
-        console.log('Curso encontrado:', curso);
+        //console.log('Curso encontrado:', curso);
 
         // Obtener las asignaciones del curso
         const asignaciones = await Asignacion.find({ curso_id: curso._id });
 
-        console.log('Asignaciones encontradas:', asignaciones);
+        //console.log('Asignaciones encontradas:', asignaciones);
 
         // Obtener los estudiantes y sus calificaciones
         const estudiantes = await Estudiante.find({ _id: { $in: curso.estudiante_id } });
 
-        console.log('Estudiantes encontrados:', estudiantes.length);
+        //console.log('Estudiantes encontrados:', estudiantes.length);
 
         const resultados = estudiantes.map(estudiante => {
             const calificacionesEstudiante = asignaciones.map(asignacion => {
