@@ -20,45 +20,45 @@ const dataList = [
   ];
 
 export default function Grupos(props) {
-    const [datos, setDatos] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    // const [datos, setDatos] = useState([]);
+    // const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchDatos = async () => {
-            try {
-                const response = await fetch(`http://localhost:3001/api/obtenerDatos?maestroId=${props.id}`);
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta de la API');
-                }
-                const data = await response.json();
-                setDatos(data.resultados);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchDatos = async () => {
+    //         try {
+    //             const response = await fetch(`http://localhost:3001/api/obtenerDatos?maestroId=${props.id}`);
+    //             if (!response.ok) {
+    //                 throw new Error('Error en la respuesta de la API');
+    //             }
+    //             const data = await response.json();
+    //             setDatos(data.resultados);
+    //             setLoading(false);
+    //         } catch (error) {
+    //             setError(error.message);
+    //             setLoading(false);
+    //         }
+    //     };
 
-        fetchDatos();
-    }, [props.id]);
+    //     fetchDatos();
+    // }, [props.id]);
 
-    if (loading) {
-        return <div>Cargando...</div>;
-    }
+    // if (loading) {
+    //     return <div>Cargando...</div>;
+    // }
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    // if (error) {
+    //     return <div>Error: {error}</div>;
+    // }
 
-    console.log(datos);
+    // console.log(datos);
 
     return (
 
         <div className="grupos-container">
             <div className="grupo">
                 <div className="grupo-header">
-                    <h3 className="grupo-title">{props.nombre}</h3>
+                    <h3 className="grupo-title">{props.nombreGrupo}</h3>
                 </div>
 
                 <div className="grupo-content">

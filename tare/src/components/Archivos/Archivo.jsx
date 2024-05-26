@@ -21,8 +21,8 @@ export default function({props, nombre}){
 
     return(
         <>
-        <div class = 'examen-component'>
-            <div class= 'block icon-innershadow'>
+        <div className = 'examen-component'>
+            <div className = 'block icon-innershadow'>
                 <img src={url} alt="Examen"/>
             </div>
 

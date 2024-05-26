@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import Grupos from '/src/components/Grupos/Grupos';
 
-const GruposPage = () => {
+export default function GruposPage() {
     const [cursos, setCursos] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('/api/obtenerCursos')
-            .then(response => {
+        const fetchCursos = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/obtenerCursos');
                 if (!response.ok) {
-                    throw new Error('Error en la respuesta de la red');
+                    throw new Error('Error en la respuesta de la API');
                 }
-                return response.json();
-            })
-            .then(data => {
+                const data = await response.json();
                 setCursos(data.cursos);
-            })
-            .catch(error => {
-                console.error('Error al obtener los cursos:', error);
-                setError(error);
-            });
+                setLoading(false);
+            } catch (error) {
+                setError(error.message);
+                setLoading(false);
+            }
+        };
+
+        fetchCursos();
     }, []);
 
+    if (loading) {
+        return <div>Cargando...</div>;
+    }
+
     if (error) {
-        return <div>Error: {error.message}</div>;
+        return <div>Error: {error}</div>;
     }
 
     return (
@@ -33,6 +40,4 @@ const GruposPage = () => {
             ))}
         </div>
     );
-};
-
-export default GruposPage;
+}
