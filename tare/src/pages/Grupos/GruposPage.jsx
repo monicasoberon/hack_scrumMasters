@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Grupos from '/src/components/Grupos/Grupos';
-import { useState, useEffect } from 'react';
 
 const GruposPage = () => {
     const [cursos, setCursos] = useState([]);

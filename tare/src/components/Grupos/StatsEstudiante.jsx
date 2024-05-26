@@ -2,9 +2,6 @@ import React from 'react';
 import '/src/components/Grupos/StatsEstudiante.css';
 
 export default function statsEstudiante({props, calif}) {
-    console.log(typeof props, props)
-    console.log(typeof calif, calif)
-
     let status = 'exelente'
 
     if(calif === 'e'){

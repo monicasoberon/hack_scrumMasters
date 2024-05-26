@@ -52,7 +52,11 @@ router.get('/test', (req, res) => {
 router.get('/obtenerDatos', async (req, res) => {
     try {
         const maestroId = '1'; // ID del maestro específico
-        const cursoId = '1'; // ID del curso específico
+        const cursoId = req.query.cursoId; // ID del curso recibido desde la solicitud web
+
+        if (!cursoId) {
+            return res.status(400).json({ message: 'ID del curso es requerido' });
+        }
 
         // Buscar el maestro por ID
         const maestro = await Maestro.findById(maestroId);
@@ -60,25 +64,17 @@ router.get('/obtenerDatos', async (req, res) => {
             return res.status(404).json({ message: 'Maestro no encontrado' });
         }
 
-        //console.log('Maestro encontrado:', maestro);
-
         // Buscar el curso por ID y maestro_id
         const curso = await Curso.findOne({ _id: cursoId, maestro_id: maestroId }).populate('estudiante_id');
         if (!curso) {
             return res.status(404).json({ message: 'Curso no encontrado' });
         }
 
-        //console.log('Curso encontrado:', curso);
-
         // Obtener las asignaciones del curso
         const asignaciones = await Asignacion.find({ curso_id: curso._id });
 
-        //console.log('Asignaciones encontradas:', asignaciones);
-
         // Obtener los estudiantes y sus calificaciones
         const estudiantes = await Estudiante.find({ _id: { $in: curso.estudiante_id } });
-
-        //console.log('Estudiantes encontrados:', estudiantes.length);
 
         const resultados = estudiantes.map(estudiante => {
             const calificacionesEstudiante = asignaciones.map(asignacion => {
@@ -123,6 +119,65 @@ router.get('/obtenerCursos', async (req, res) => {
         }));
 
         res.json({ cursos: resultado });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Ruta para obtener los promedios de calificaciones de todos los cursos
+router.get('/obtenerPromedios', async (req, res) => {
+    try {
+        // Obtener todos los cursos
+        const cursos = await Curso.find().populate('estudiante_id');
+        if (!cursos.length) {
+            return res.status(404).json({ message: 'No se encontraron cursos' });
+        }
+
+        let resultados = [];
+
+        for (const curso of cursos) {
+            // Obtener las asignaciones del curso
+            const asignaciones = await Asignacion.find({ curso_id: curso._id });
+
+            // Obtener los estudiantes del curso
+            const estudiantes = await Estudiante.find({ _id: { $in: curso.estudiante_id } });
+
+            let totalCurso = 0;
+            let totalAsignaciones = 0;
+
+            const promediosAsignaciones = asignaciones.map(asignacion => {
+                let totalAsignacion = 0;
+                let countAsignacion = 0;
+
+                estudiantes.forEach(estudiante => {
+                    const calificacion = estudiante.calificaciones.find(c => c.asignacion_id === asignacion._id);
+                    if (calificacion) {
+                        totalAsignacion += parseInt(calificacion.calificacion, 10);
+                        countAsignacion++;
+                    }
+                });
+
+                const promedioAsignacion = countAsignacion > 0 ? totalAsignacion / countAsignacion : 0;
+                totalCurso += totalAsignacion;
+                totalAsignaciones += countAsignacion;
+
+                return {
+                    asignacion: asignacion.nombre,
+                    promedio: promedioAsignacion
+                };
+            });
+
+            const promedioCurso = totalAsignaciones > 0 ? totalCurso / totalAsignaciones : 0;
+
+            resultados.push({
+                curso: curso.nombre,
+                maestro: "Julen Hoppenstendt",
+                promediosAsignaciones,
+                promedioCurso
+            });
+        }
+
+        res.json(resultados);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
