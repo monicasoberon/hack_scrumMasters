@@ -3,12 +3,14 @@ import './ModalEstudiante.css';
 
 const ModalEstudiante = ({ isOpen, onClose, studentName }) => {
     const [studentInfo, setStudentInfo] = useState(null);
+    const firstName = studentName.split(' ')[0]; // Get the first word in the student name
+    console.log(firstName);
 
     useEffect(() => {
-        if (isOpen && studentName) {
+        if (isOpen && firstName) {
             const fetchStudentInfo = async () => {
                 try {
-                    const response = await fetch(`http://localhost:3001/obtenerInfoEstudiante/${studentName}`);
+                    const response = await fetch(`http://localhost:3001/obtenerInfoEstudiante/${firstName}`);
                     const data = await response.json();
                     setStudentInfo(data);
                 } catch (error) {
@@ -18,7 +20,7 @@ const ModalEstudiante = ({ isOpen, onClose, studentName }) => {
 
             fetchStudentInfo();
         }
-    }, [isOpen, studentName]);
+    }, [isOpen, firstName]);
 
     if (!isOpen) return null;
 
