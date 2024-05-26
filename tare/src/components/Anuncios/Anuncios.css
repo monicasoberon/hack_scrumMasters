@@ -37,6 +37,7 @@
 }
 
 .anuncios-container button {
+    all: unset; /* Resets all inherited properties */
     border: none;
     border-radius: 15px;
     padding: 5px 10px;

@@ -5,9 +5,9 @@ export default function Modal() {
 
   return (
     <div className="centeredDiv">
-        <form>
-            <input type="file"/>Buscar Archivo
-            <button type="submit">Submit</button>
+        <form action="POST" className='fileform'>
+            <input type="file" className='fileinput'></input>
+            <button type="submit" className='subButton'>Submit</button>
         </form>
     </div>
   );

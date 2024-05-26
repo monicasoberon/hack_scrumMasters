@@ -83,6 +83,10 @@
 }
   
   .logout-button {
+    all: unset; /* Resets all inherited properties */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     align-self: center;
     width: 154px;
     height: 44px;
