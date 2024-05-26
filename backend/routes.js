@@ -183,6 +183,37 @@ router.get('/obtenerPromedios', async (req, res) => {
     }
 });
 
+// Ruta para calcular el promedio de cada estudiante en un curso específico
+router.get('/calcularPromediosEstudiantes/:cursoId', async (req, res) => {
+    try {
+        const { cursoId } = req.params;
+
+        // Obtener el curso y verificar que exista
+        const curso = await Curso.findById(cursoId).populate('estudiante_id');
+        if (!curso) {
+            return res.status(404).json({ message: 'Curso no encontrado' });
+        }
+
+        // Obtener los estudiantes del curso
+        const estudiantes = await Estudiante.find({ _id: { $in: curso.estudiante_id } });
+
+        // Calcular el promedio de cada estudiante
+        const resultados = estudiantes.map(estudiante => {
+            const totalCalificaciones = estudiante.calificaciones.reduce((total, calificacion) => total + parseInt(calificacion.calificacion, 10), 0);
+            const promedio = (totalCalificaciones / estudiante.calificaciones.length).toFixed(2);
+
+            return {
+                estudiante: `${estudiante.primer_nombre} ${estudiante.apellido}`,
+                promedio: promedio
+            };
+        });
+
+        res.json(resultados);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Route to upload PDF with curso_id
 router.post('/upload-files', upload.single('file'), async (req, res) => {
     const { title, curso_id } = req.body;
