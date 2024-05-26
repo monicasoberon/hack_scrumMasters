@@ -23,8 +23,8 @@ def upload_file(file_loc, file_name, fs):
         print(f"Error uploading file: {e}")
 
 
-def download_file(file_name,fs, download_loc):
-     data = fs.files.find_one({"filename": file_name})
+def download_file(file_name,fs,db, download_loc):
+     data = db.pdfdetails.files.find_one({"filename": file_name})     
      fs_id=data["_id"]
      out_data = fs.get(fs_id).read()
 
@@ -35,12 +35,12 @@ def download_file(file_name,fs, download_loc):
 print("start")
 file_path = "/Users/fermo/OneDrive/Documents\GitHub/hack_scrumMasters/tare/libros/Diles que no me maten.pdf"
 file_name="Diles que no me maten.pdf"
-download_loc=os.path.join(os.getcwd()+ "/downloads/" ,file_name)
+download_loc=os.path.join(os.getcwd(),"downloads",file_name )
 db=mongo_connect()
 fs =GridFS(db,collection="pdfdetails")
-print("debug")
-upload_file(file_loc=file_path,file_name=file_name,fs=fs)
-
+# print("debug")
+# upload_file(file_loc=file_path,file_name=file_name,fs=fs)
+download_file(file_name=file_name,fs=fs,db=db,download_loc=download_loc)
 
 # sendDB(file_path)
 print("ending")

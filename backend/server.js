@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 
 // MongoDB connection
-const mongoURI = 'mongodb+srv://monicasoberon:Hackathon@scrummasters.zm1sl.mongodb.net/HackathonSM';
+const mongoURI = 'mongodb+srv://fermoran:fermoran@scrummasters.zm1sl.mongodb.net/HackathonSM';
 
 mongoose.connect(mongoURI, {
     useNewUrlParser: true,

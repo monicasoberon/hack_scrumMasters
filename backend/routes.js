@@ -12,7 +12,7 @@ const Curso = require('./models/curso');
 const Asignacion = require('./models/asignacion');
 const PdfDetails = require('./models/pdfs');
 
-const mongoURI = 'mongodb+srv://monicasoberon:Hackathon@scrummasters.zm1sl.mongodb.net/HackathonSM';
+const mongoURI = 'mongodb+srv://fermoran:fermoran@scrummasters.zm1sl.mongodb.net/HackathonSM';
 
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI, {
