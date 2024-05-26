@@ -7,7 +7,7 @@ export default function Anuncios() {
             <div className='anuncio-container'>
                 <h3 className='anuncio-title'>Anuncio</h3>
                 <p className='anuncio-text'>
-                    Hemos notado que dentro de tu salon Salon 6B a tenido 
+                    Hemos notado que tu grupo, Matemáticas 1, a tenido 
                     una semana baja, dale click a continuar para ver un 
                     nuevo plan de estudios.
                 </p>
@@ -19,8 +19,7 @@ export default function Anuncios() {
             <div className='anuncio-container'>
                 <h3 className='anuncio-title'>Anuncio</h3>
                 <p className='anuncio-text'>
-                    Hemos notado que dentro de tu salon Salon 6B a tenido 
-                    una semana baja, dale click a continuar para ver un
+                    Tu alumno, Juán Pérez, no ha entregado ni un trabajo esta semana, date un tiempo para revisar su progreso.
                 </p>
                 <div className='anuncios-button-container'>
                     <button className='cerrar'>cerrar</button>
