@@ -19,4 +19,8 @@
     font-size: 20px;
     font-weight: 500;
     color:#A7A7A7;
+    white-space: nowrap; /* Prevents text from wrapping to the next line */
+    overflow: hidden;    /* Hides the overflow content */
+    text-overflow: ellipsis; /* Adds '...' at the end of the truncated text */
+    width: 180px; /* Adjust width as necessary */
 }

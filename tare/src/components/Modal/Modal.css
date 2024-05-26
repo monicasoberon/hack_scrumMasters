@@ -1,0 +1,34 @@
+form{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: space-around;
+}
+
+input{
+    width: 87.13px;
+}
+
+button{
+    display: block;
+    border-radius: 3px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    background: radial-gradient(circle, #20ACFB 0%, #42BAFD 55%, #64C7FF 100%);
+    color: #FFFFFF;
+    text-align: center;
+    border:none;
+}
+
+  .centeredDiv {
+    position: fixed;
+    top: 30%;
+    left: 40%;
+    height: 40px;
+    width: 270px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
