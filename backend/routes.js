@@ -183,6 +183,39 @@ router.get('/obtenerPromedios', async (req, res) => {
     }
 });
 
+// Ruta para obtener información del estudiante por nombre
+router.get('/obtenerInfoEstudiante/:nombre', async (req, res) => {
+    try {
+        const { nombre } = req.params;
+
+        // Buscar el estudiante por nombre
+        const estudiante = await Estudiante.findOne({ primer_nombre: nombre });
+        if (!estudiante) {
+            return res.status(404).json({ message: 'Estudiante no encontrado' });
+        }
+
+        // Obtener las asignaciones y sus calificaciones
+        const asignaciones = await Asignacion.find();
+        const calificacionesEstudiante = asignaciones.map(asignacion => {
+            const calificacion = estudiante.calificaciones.find(c => c.asignacion_id.toString() === asignacion._id.toString());
+            return {
+                nombreAsignacion: asignacion.nombre,
+                calificacion: calificacion ? calificacion.calificacion : 'N/A'
+            };
+        });
+
+        // Formatear la respuesta
+        const resultado = {
+            nombreEstudiante: `${estudiante.primer_nombre} ${estudiante.apellido}`,
+            calificaciones: calificacionesEstudiante
+        };
+
+        res.json(resultado);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Ruta para calcular el promedio de cada estudiante en un curso específico
 router.get('/calcularPromediosEstudiantes/:cursoId', async (req, res) => {
     try {
