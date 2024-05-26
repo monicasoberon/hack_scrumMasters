@@ -58,7 +58,7 @@ export default function Grupos(props) {
         <div className="grupos-container">
             <div className="grupo">
                 <div className="grupo-header">
-                    <h3 className="grupo-title">{props.nombreGrupo}</h3>
+                    <h3 className="grupo-title">{props.nombre}</h3>
                 </div>
 
                 <div className="grupo-content">

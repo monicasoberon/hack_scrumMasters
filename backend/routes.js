@@ -12,7 +12,7 @@ const Curso = require('./models/curso');
 const Asignacion = require('./models/asignacion');
 const PdfDetails = require('./models/pdfs');
 
-const mongoURI = 'mongodb+srv://monicasoberon2747:ScrumMasters100@cluster0.r9bpf.mongodb.net/ScrumMasters';
+const mongoURI = 'mongodb+srv://monicasoberon:Hackathon@scrummasters.zm1sl.mongodb.net/HackathonSM';
 
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI, {
@@ -49,7 +49,6 @@ router.get('/test', (req, res) => {
     res.send('Test route');
 });
 
-// Ruta para obtener asignaciones, estudiantes y calificaciones para un curso y maestro específicos
 router.get('/obtenerDatos', async (req, res) => {
     try {
         const maestroId = '1'; // ID del maestro específico
@@ -61,21 +60,29 @@ router.get('/obtenerDatos', async (req, res) => {
             return res.status(404).json({ message: 'Maestro no encontrado' });
         }
 
+        //console.log('Maestro encontrado:', maestro);
+
         // Buscar el curso por ID y maestro_id
         const curso = await Curso.findOne({ _id: cursoId, maestro_id: maestroId }).populate('estudiante_id');
         if (!curso) {
             return res.status(404).json({ message: 'Curso no encontrado' });
         }
 
+        //console.log('Curso encontrado:', curso);
+
         // Obtener las asignaciones del curso
         const asignaciones = await Asignacion.find({ curso_id: curso._id });
+
+        //console.log('Asignaciones encontradas:', asignaciones);
 
         // Obtener los estudiantes y sus calificaciones
         const estudiantes = await Estudiante.find({ _id: { $in: curso.estudiante_id } });
 
+        //console.log('Estudiantes encontrados:', estudiantes.length);
+
         const resultados = estudiantes.map(estudiante => {
             const calificacionesEstudiante = asignaciones.map(asignacion => {
-                const calificacion = estudiante.calificaciones.find(c => c.asignacion_id === asignacion._id);
+                const calificacion = estudiante.calificaciones.find(c => c.asignacion_id.toString() === asignacion._id.toString());
                 return {
                     nombreAsignacion: asignacion.nombre,
                     calificacion: calificacion ? calificacion.calificacion : 'N/A'

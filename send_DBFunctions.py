@@ -1,61 +1,46 @@
-import openai
 import os
-from pdfminer.high_level import extract_text
-import textract 
-from sklearn.feature_extraction.text import CountVectorizer
-from langdetect import detect
-
+# from pdfminer.high_level import extract_text
+# import textract 
 
 from pymongo import MongoClient
 from gridfs import GridFS
 
+def mongo_connect():
+    try:
+        conn = MongoClient("mongodb+srv://fermoran:fermoran@scrummasters.zm1sl.mongodb.net",port=27017)
+        print("Connected successfully!!!")
+        db=conn['HackathonSM']
+        return db
+    except Exception as e:
+            print("Could not connect to MongoDB {e}")
 
-# Set up OpenAI API credentials
-# openai.api_key = os.getenv("OPENAI_API_KEY")
-
-# Function to generate txt if needed (ya no se usa)
-def readFile(file_path):
-    if file_path.endswith('.pdf'):
-        text = extract_text(file_path)
-        with open('new_file.txt', 'w',encoding='utf-8') as f:
-            f.write(text)
-        return text
-    
-    elif file_path.endswith('.txt'):
-        text = open(file_path, 'r').read()
-        return text
+def upload_file(file_loc, file_name, fs):
+    try:
+        with open(file_loc, 'rb') as f:
+            fs.put(f, filename=file_name)
+        print("File uploaded successfully")
+    except Exception as e:
+        print(f"Error uploading file: {e}")
 
 
-def sendDB(file_path):
-    # Connect to MongoDB
-    client = MongoClient('localhost', 3001)
-    # Select the database
-    db = client['ScrumMaster']
-    # Select the collection
-    collection = db['Pdfs']
-    # Create a GridFS object
-    fs = GridFS(db)
+def download_file(file_name,fs, download_loc):
+     data = fs.files.find_one({"filename": file_name})
+     fs_id=data["_id"]
+     out_data = fs.get(fs_id).read()
 
-    # Read the file content
-    with open(file_path, 'rb') as file:
-        content = file.read()
-
-    # If the file size is less than 16MB, store it as a regular document
-    if len(content) < 16 * 1024 * 1024:  # 16MB in bytes
-        document = {
-            'id_curso': '1',
-            'file_content': content
-        }
-        collection.insert_one(document)
-    # If the file size is 16MB or more, store it in GridFS
-    else:
-        with open(file_path, 'rb') as file:
-            fs.put(file, filename=file_path, id_curso='1')
+     with open(download_loc, 'wb') as output:
+          output.write(out_data)
 
 # Example usage
-file_path = r"tare/libros/Competitive programming handbook.pdf"
 print("start")
-# print("start")
-# quiz_questions = readFile(file_path)
-sendDB(file_path)
+file_path = "/Users/fermo/OneDrive/Documents\GitHub/hack_scrumMasters/tare/libros/Diles que no me maten.pdf"
+file_name="Diles que no me maten.pdf"
+download_loc=os.path.join(os.getcwd()+ "/downloads/" ,file_name)
+db=mongo_connect()
+fs =GridFS(db,collection="pdfdetails")
+print("debug")
+upload_file(file_loc=file_path,file_name=file_name,fs=fs)
+
+
+# sendDB(file_path)
 print("ending")
