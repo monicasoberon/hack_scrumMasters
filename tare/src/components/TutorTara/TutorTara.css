@@ -29,6 +29,34 @@
     font-size: 25px;
 }
 
+.sec-2{
+    display: flex;
+}
+
+.question{
+    background-color: #F1F1F1;
+    color: #191919;
+    font-size: 25px;
+    margin-left: auto;
+    padding: 5px;
+    box-shadow: inset 0px 6px 40px 0px rgba(0, 0, 0, 0.1);
+    max-height: 80px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    align-self: center;
+    transition: height 0.3s ease-in-out; /* Transition for height changes */
+    overflow: hidden; /* Ensure content doesn't overflow */
+    height: auto; /* Allow dynamic height */
+}
+
+.question p{
+    max-height: 70px;
+    overflow-y: auto;
+    max-width: 515px;
+    margin: 0;
+}
+
 .form-tara{
     display: flex;
     width: 98%;
