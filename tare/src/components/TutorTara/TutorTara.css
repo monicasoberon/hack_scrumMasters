@@ -58,6 +58,7 @@
 }
 
 .form-tara{
+    all: unset; /* Resets all inherited properties */
     display: flex;
     width: 98%;
     box-shadow: inset 0px 6px 40px 0px rgba(0, 0, 0, 0.1);

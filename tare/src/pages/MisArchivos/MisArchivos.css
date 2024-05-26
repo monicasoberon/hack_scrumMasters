@@ -3,3 +3,13 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+a{
+    text-decoration: none;
+}
+
+.openModalBtn{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
