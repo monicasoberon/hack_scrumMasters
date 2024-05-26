@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './Grupos.css';
 import StatsEstudiante from '/src/components/Grupos/StatsEstudiante.jsx';
 import StatsGrupo from '/src/components/Grupos/StatsGrupo.jsx';
+import ModalGrupo from '/src/components/Grupos/ModalGrupo.jsx';
 
 export default function Grupos(props) {
     const [studentStats, setStudentStats] = useState([]);
     const [grupoStats, setGrupoStats] = useState(null);
+    const [isModalGrupoOpen, setIsModalGrupoOpen] = useState(false);
 
     useEffect(() => {
         const fetchStudentStats = async () => {
@@ -33,7 +35,15 @@ export default function Grupos(props) {
         fetchGrupoStats();
     }, [props.cursoId, props.nombreGrupo]);
 
-    console.log(studentStats, grupoStats)
+    const handleOpenModalGrupo = () => {
+        setIsModalGrupoOpen(true);
+    };
+
+    const handleCloseModalGrupo = () => {
+        setIsModalGrupoOpen(false);
+    };
+
+    console.log(studentStats, grupoStats);
 
     return (
         <div className="grupos-container">
@@ -49,11 +59,18 @@ export default function Grupos(props) {
                         ))}
                     </div>
 
-                    <div className="grupo-stats">
+                    <div className="grupo-stats" onClick={handleOpenModalGrupo}>
                         {grupoStats !== null && <StatsGrupo promedio={grupoStats} />}
                     </div>
                 </div>
             </div>
+
+            <ModalGrupo
+                isOpen={isModalGrupoOpen}
+                onClose={handleCloseModalGrupo}
+                grupoStats={grupoStats}
+                studentStats={studentStats}
+            />
         </div>
     );
 }

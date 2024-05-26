@@ -38,3 +38,7 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.grupo-stats:hover{
+    cursor: pointer;;
+}
