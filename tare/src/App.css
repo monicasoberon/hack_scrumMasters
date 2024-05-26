@@ -16,5 +16,12 @@
 .content {
   margin: 0;
   margin-left: 300px;
-  margin-right: 300px;
+  margin-right: 0px;
+  width:100%;
+  overflow: auto;
+}
+
+.seccion-Anuncios{
+  width: 450px;
+  overflow: auto;
 }

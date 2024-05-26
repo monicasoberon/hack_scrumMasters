@@ -1,0 +1,63 @@
+.title{
+    color: #20ACFB;
+}
+
+.main-tutor{
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 540px;
+    box-shadow: inset 0px 6px 40px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: -20px;
+}
+
+.bubble-container{
+    background-color: #F1F1F1;
+    box-shadow: inset 0px 6px 40px 0px rgba(0, 0, 0, 0.1);
+    width: 97%;
+    height: 250px;
+    border-radius: 10px;
+    overflow: auto;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.bubble-container p{
+    margin:0;
+    color:#20ACFB;
+    font-size: 25px;
+}
+
+.form-tara{
+    display: flex;
+    width: 98%;
+    box-shadow: inset 0px 6px 40px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 25px;
+}
+.form-tara input{
+    width: 100%;
+    font-size: 20px;
+    margin-right: 5px;
+    background: none;
+    border:none;
+    color: #A7A7A7;
+}
+
+.form-tara button{
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(
+    circle, 
+    #20ACFB 0%, 
+    #42BAFD 55%, 
+    #64C7FF 100%
+    );
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
