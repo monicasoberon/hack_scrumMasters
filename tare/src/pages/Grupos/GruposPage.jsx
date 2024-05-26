@@ -1,32 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Grupos from '/src/components/Grupos/Grupos';
 
-const propsPrueba = [
-    {
-        nombreGrupo: 'Mi Grupo 1',
-        id: 1,
-    },
-    {
-        nombreGrupo: 'Mi Grupo 2',
-        id: 2,
-    },
-    {
-        nombreGrupo: 'Mi Grupo 3',
-        id: 3,
-    },
-    {
-        nombreGrupo: 'Mi Grupo 4',
-        id: 4,
-    },
-];
-
 export default function GruposPage() {
-    
+    const [cursos, setCursos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchCursos = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/obtenerCursos');
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta de la API');
+                }
+                const data = await response.json();
+                setCursos(data.cursos);
+                setLoading(false);
+            } catch (error) {
+                setError(error.message);
+                setLoading(false);
+            }
+        };
+
+        fetchCursos();
+    }, []);
+
+    if (loading) {
+        return <div>Cargando...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
     return (
         <div>
-            <h1 className='title' >Mis Grupos</h1>
-            {propsPrueba.map((grupo) => (
-                <Grupos key={grupo.id} {...grupo} />
+            {cursos.map((curso) => (
+                <Grupos key={curso.id} nombreGrupo={curso.nombre} id={curso.id} />
             ))}
         </div>
     );
