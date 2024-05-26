@@ -8,7 +8,7 @@ export default function MisArchivos() {
         <>
         <h1 className='title' >Mis Archivos</h1>
         <div className='MisArchivos-container'>
-            <Archivo props={2} nombre={'Nombre A'}/>
+            <a href ='../../../libros/Competitive_programming_handbook.pdf' target="_blank" rel="noopener noreferrer"><Archivo props={2} nombre={'Competitive programming handbook.pdf'}/></a>
             <Archivo props={2} nombre={'Nombre A'}/>
             <Archivo props={2} nombre={'Nombre A'}/>
             <Archivo props={2} nombre={'Nombre A'}/>

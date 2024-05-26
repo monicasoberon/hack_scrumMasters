@@ -1,6 +1,6 @@
 import React from 'react';
 import './TutorTara.css'
-import 'backend/aiRoute.js'
+//import 'backend/aiRoute.js'
 
 export default function TutorTara(props) {
     return (
